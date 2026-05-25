@@ -11,104 +11,120 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             background: #0a0a0f;
             color: #f0ede8;
             font-family: 'DM Sans', sans-serif;
             line-height: 1.5;
-            min-height: 100vh;
+            font-size: 18px;
         }
-
         .hero {
             background: linear-gradient(145deg, #0b1120 0%, #0a0f1c 100%);
             text-align: center;
             padding: 3rem 1.5rem 2rem;
             border-bottom: 1px solid rgba(94, 207, 177, 0.2);
         }
-
         .hero-badge {
             display: inline-block;
             background: rgba(94, 207, 177, 0.1);
             border: 1px solid rgba(94, 207, 177, 0.3);
             border-radius: 60px;
             padding: 0.3rem 1rem;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-family: 'DM Mono', monospace;
             letter-spacing: 1px;
             color: #5ecfb1;
             margin-bottom: 1rem;
         }
-
         h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
             letter-spacing: -1px;
         }
-
         .gold {
             color: #e8c87a;
         }
-
         .sub {
             color: #9aaec9;
-            max-width: 550px;
+            max-width: 650px;
             margin: 1rem auto 0;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
-
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
         }
-
+        .selector-card {
+            background: #111118;
+            border: 1px solid rgba(94, 207, 177, 0.2);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .selector-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        select, input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 60px;
+            background: #0c1222;
+            border: 1px solid #2a3452;
+            color: white;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #5ecfb1;
+        }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-top: 2rem;
         }
-
         .card {
             background: #111118;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 1.5rem;
-            padding: 1.5rem;
+            padding: 1.8rem;
             transition: 0.2s ease;
             cursor: pointer;
         }
-
         .card:hover {
             transform: translateY(-4px);
             border-color: rgba(94, 207, 177, 0.4);
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
         }
-
         .card-icon {
-            font-size: 2.2rem;
-            margin-bottom: 0.8rem;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
             display: inline-block;
         }
-
         .card-title {
             font-family: 'Syne', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-
         .card-desc {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: #aaa;
             line-height: 1.5;
         }
-
         .card-tag {
             display: inline-block;
             margin-top: 1rem;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-family: 'DM Mono', monospace;
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
@@ -116,39 +132,26 @@
             border: 1px solid rgba(94, 207, 177, 0.3);
             color: #5ecfb1;
         }
-
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin: 2rem 0 0.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: inline-block;
-        }
-
         hr {
             border: none;
             height: 1px;
             background: rgba(255, 255, 255, 0.1);
             margin: 2rem 0;
         }
-
         .footer {
             text-align: center;
             padding: 2rem 1rem;
             background: #0a0a0f;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: #5e6c8c;
         }
-
         @media (max-width: 640px) {
             .grid {
                 grid-template-columns: 1fr;
             }
             h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
         }
     </style>
@@ -158,61 +161,77 @@
 <div class="hero">
     <div class="hero-badge">⚡ Prépare-toi aux évaluations nationales</div>
     <h1>Commando <span class="gold">CM2</span></h1>
-    <div class="sub">Diagnostic · Entraînement ciblé · Flashcards · Suivi personnalisé</div>
+    <div class="sub">Diagnostic · Entraînement ciblé · Flashcards · Suivi enseignant</div>
 </div>
 
 <div class="container">
+    <!-- Sélection du prénom -->
+    <div class="selector-card">
+        <div class="selector-title">👤 Qui es-tu ?</div>
+        <select id="prenom-select">
+            <option value="">-- Choisis ton prénom --</option>
+            <option value="Raphaël">Raphaël</option>
+            <option value="Heidi">Heidi</option>
+            <option value="Alice">Alice</option>
+            <option value="Norah">Norah</option>
+            <option value="Adèle">Adèle</option>
+            <option value="Kim">Kim</option>
+            <option value="Sheurley">Sheurley</option>
+            <option value="Iris">Iris</option>
+            <option value="Luc">Luc</option>
+            <option value="Trecy">Trecy</option>
+            <option value="Loris">Loris</option>
+            <option value="Léna">Léna</option>
+            <option value="Amandine">Amandine</option>
+            <option value="Ethan">Ethan</option>
+            <option value="Andryana">Andryana</option>
+            <option value="Kaysia">Kaysia</option>
+            <option value="Camila">Camila</option>
+            <option value="Cassie">Cassie</option>
+            <option value="Adriel">Adriel</option>
+        </select>
+        <p style="font-size:0.75rem; margin-top:0.5rem; color:#aaa;">Si ton prénom n’est pas dans la liste, écris‑le ci‑dessous.</p>
+        <input type="text" id="prenom-autre" placeholder="Autre prénom..." style="margin-top:0.5rem;">
+    </div>
+
+    <!-- Grille des modules -->
     <div class="grid">
-        <!-- Diagnostic -->
-        <div class="card" onclick="location.href='diag.html'">
+        <div class="card" onclick="navigateTo('diag.html')">
             <span class="card-icon">📋</span>
             <div class="card-title">Diagnostic initial</div>
             <div class="card-desc">30 questions aléatoires (français + maths) pour identifier tes points forts et tes lacunes.</div>
             <span class="card-tag">10‑15 min</span>
         </div>
 
-        <!-- Entraînement Français -->
-        <div class="card" onclick="location.href='entrainement-fr.html'">
+        <div class="card" onclick="navigateTo('entrainement-fr.html')">
             <span class="card-icon">📖</span>
             <div class="card-title">Entraînement Français</div>
             <div class="card-desc">Exercices adaptés à ton niveau. Double dose sur les notions difficiles.</div>
             <span class="card-tag">400 exercices</span>
         </div>
 
-        <!-- Entraînement Maths -->
-        <div class="card" onclick="location.href='entrainement-maths.html'">
+        <div class="card" onclick="navigateTo('entrainement-maths.html')">
             <span class="card-icon">🧮</span>
             <div class="card-title">Entraînement Maths</div>
             <div class="card-desc">Nombres, calculs, géométrie, problèmes. Progression automatique.</div>
             <span class="card-tag">400 exercices</span>
         </div>
 
-        <!-- Flashcards -->
-        <div class="card" onclick="location.href='flashcards.html'">
+        <div class="card" onclick="navigateTo('flashcards.html')">
             <span class="card-icon">🗂️</span>
             <div class="card-title">Flashcards</div>
             <div class="card-desc">Règles et exemples. Révision espacée (J+1, J+3, J+7).</div>
             <span class="card-tag">Mémorisation active</span>
         </div>
 
-        <!-- Oral / Fluence -->
-        <div class="card" onclick="location.href='oral-fluence.html'">
-            <span class="card-icon">🎤</span>
-            <div class="card-title">Oral / Fluence</div>
-            <div class="card-desc">Lecture chronométrée, conseils pour améliorer ton débit et ton articulation.</div>
-            <span class="card-tag">1 minute</span>
-        </div>
-
-        <!-- Suivi enseignant -->
-        <div class="card" onclick="location.href='suivi-enseignant.html'">
+        <div class="card" onclick="navigateTo('suivi-enseignant.html')">
             <span class="card-icon">📊</span>
             <div class="card-title">Tableau de bord enseignant</div>
             <div class="card-desc">Suivi des progrès par élève, alertes, export des résultats.</div>
             <span class="card-tag">Accès protégé</span>
         </div>
 
-        <!-- Guide -->
-        <div class="card" onclick="location.href='guide-commando-cm2.html'">
+        <div class="card" onclick="navigateTo('guide-commando-cm2.html')">
             <span class="card-icon">📘</span>
             <div class="card-title">Guide pédagogique</div>
             <div class="card-desc">Pourquoi ce système ? Comment l’utiliser ? Fondements scientifiques.</div>
@@ -223,7 +242,7 @@
     <hr>
 
     <div style="text-align: center;">
-        <p style="color:#9aaec9; font-size:0.85rem;">⚡ Chaque session est enregistrée dans ton Google Sheet. <br>Tu peux reprendre ton travail où tu l’as laissé.</p>
+        <p style="color:#9aaec9; font-size:0.9rem;">⚡ Chaque session est enregistrée dans ton Google Sheet. <br>Tu peux reprendre ton travail où tu l’as laissé.</p>
     </div>
 </div>
 
@@ -232,9 +251,36 @@
 </div>
 
 <script>
-    // L'URL du script Google Apps Script (à utiliser dans les modules)
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDgu0ErJHRYBC8Glo4GXB7UbizWmsvFgaRh8lHUzqTEf7znlrb35l_DNiXYd9lTakq/exec';
-    console.log('Commando CM2 – Script prêt');
+
+    function getPrenom() {
+        let prenom = document.getElementById('prenom-select').value;
+        if (!prenom) {
+            prenom = document.getElementById('prenom-autre').value.trim();
+        }
+        if (!prenom) {
+            alert("Veuillez choisir ou saisir ton prénom avant de continuer.");
+            return null;
+        }
+        return prenom;
+    }
+
+    function navigateTo(page) {
+        const prenom = getPrenom();
+        if (!prenom) return;
+        // Stocker le prénom dans localStorage pour que les autres pages le retrouvent
+        localStorage.setItem('commando_prenom', prenom);
+        window.location.href = page;
+    }
+
+    // Pré-remplir si un prénom est déjà stocké (optionnel)
+    window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('commando_prenom');
+        if (saved) {
+            // On ne pré-sélectionne pas automatiquement, l'élève doit confirmer
+            console.log('Prénom déjà utilisé :', saved);
+        }
+    });
 </script>
 </body>
 </html>
