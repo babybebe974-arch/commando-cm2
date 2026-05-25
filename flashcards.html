@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🗂 Flashcards — Commando CM2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0f;
+            color: #f0ede8;
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.5;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #111118;
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 1px solid rgba(94, 207, 177, 0.2);
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .gold {
+            color: #e8c87a;
+        }
+        .sub {
+            color: #9aaec9;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .card-container {
+            perspective: 1000px;
+            margin: 1.5rem 0;
+        }
+        .flashcard {
+            background: #0c1222;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.2s;
+            border: 1px solid rgba(94, 207, 177, 0.3);
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .flashcard:hover {
+            transform: scale(1.02);
+            border-color: #5ecfb1;
+        }
+        .card-front, .card-back {
+            transition: opacity 0.2s;
+        }
+        .card-back {
+            display: none;
+        }
+        .flashcard.flipped .card-front {
+            display: none;
+        }
+        .flashcard.flipped .card-back {
+            display: block;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #5ecfb1;
+        }
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-top: 1rem;
+        }
+        .example {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #e8c87a;
+            font-size: 0.9rem;
+        }
+        .progress-bar-bg {
+            background: #1e2a3e;
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        .progress-fill {
+            background: #5ecfb1;
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s;
+        }
+        .info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+        .btn-group {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+        button {
+            background: #1e2a3e;
+            border: none;
+            border-radius: 60px;
+            padding: 0.8rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.1s;
+            flex: 1;
+        }
+        button.primary {
+            background: linear-gradient(135deg, #5ecfb1, #3aad8a);
+            color: #0a0a0f;
+            font-weight: 800;
+        }
+        button.primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        button.secondary {
+            background: #2a3652;
+        }
+        button.secondary:hover {
+            background: #3a4668;
+        }
+        .back-home {
+            display: inline-block;
+            margin-top: 1.5rem;
+            text-decoration: none;
+            color: #5ecfb1;
+            font-size: 0.8rem;
+        }
+        .toast {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            background: #2c2c3a;
+            border-radius: 60px;
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 100;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+        @media (max-width: 550px) {
+            .container {
+                padding: 1rem;
+            }
+            .flashcard {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Flash<span class="gold">cards</span></h1>
+    <div class="sub">Règle · Exemple · Révision espacée (J+1, J+3, J+7)</div>
+    <div id="prenom-display" style="margin-bottom:0.5rem; font-weight:bold;">👤 Élève : <span id="affiche-prenom"></span></div>
+    <div class="progress-bar-bg"><div class="progress-fill" id="prog-fill"></div></div>
+    <div class="info">
+        <span id="card-counter">Carte 1 / 20</span>
+        <span>Clique sur la carte pour voir la réponse</span>
+    </div>
+
+    <div class="card-container">
+        <div class="flashcard" id="flashcard">
+            <div class="card-front">
+                <div class="card-title" id="front-title">...</div>
+                <div class="card-content" id="front-content"></div>
+            </div>
+            <div class="card-back">
+                <div class="card-title" id="back-title">Réponse / Exemple</div>
+                <div class="card-content" id="back-content"></div>
+                <div class="example" id="back-example"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button id="again-btn" class="secondary">✗ À revoir (1j)</button>
+        <button id="good-btn" class="secondary">~ Moyen (3j)</button>
+        <button id="easy-btn" class="primary">✓ Maîtrisé (7j)</button>
+    </div>
+    <div style="text-align: center; margin-top: 1rem;">
+        <a href="index.html" class="back-home">← Retour à l'accueil</a>
+    </div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+    // ========== URL DU SCRIPT GOOGLE SHEET (optionnel) ==========
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDgu0ErJHRYBC8Glo4GXB7UbizWmsvFgaRh8lHUzqTEf7znlrb35l_DNiXYd9lTakq/exec';
+
+    // ========== BANQUE DE CARTES (français + maths) ==========
+    const CARDS = [
+        { id: "inf_sentiment", matiere: "Français", front: "Inférence (sentiment)", back: "Pour deviner un sentiment, observe les gestes, les expressions du visage et le ton.", example: "Exemple : « Il pâlit » → peur ou choc." },
+        { id: "info_explicite", matiere: "Français", front: "Information explicite", back: "L'information est écrite clairement dans le texte. Il suffit de la repérer.", example: "Exemple : « Léa lit un livre. » → elle lit." },
+        { id: "sens_nocturne", matiere: "Français", front: "Sens du mot « nocturne »", back: "Nocturne = qui se passe la nuit.", example: "Exemple : « Les visites nocturnes du chat » = la nuit." },
+        { id: "imparfait", matiere: "Français", front: "Imparfait (habitude)", back: "L'imparfait exprime une action habituelle ou une description dans le passé.", example: "Exemple : « Quand j'étais petit, je jouais au parc. »" },
+        { id: "expression_imagée", matiere: "Français", front: "Expression imagée", back: "Une expression qui ne doit pas être prise au sens littéral.", example: "Exemple : « Avoir le cœur sur la main » = être généreux." },
+        { id: "synonyme", matiere: "Français", front: "Synonyme", back: "Un mot qui a un sens très proche d’un autre.", example: "Exemple : « rapide » et « véloce » sont synonymes." },
+        { id: "prefixe_anti", matiere: "Français", front: "Préfixe anti-", back: "Anti- signifie « contre » ou « qui s’oppose à ».", example: "Exemple : antigel = contre le gel." },
+        { id: "suffixe_able", matiere: "Français", front: "Suffixe -able", back: "Le suffixe -able signifie « qui peut être ».", example: "Exemple : incassable = que l'on ne peut pas casser." },
+        { id: "accord_sujet_eloigne", matiere: "Français", front: "Accord du verbe (sujet éloigné)", back: "Le verbe s’accorde toujours avec son sujet, même si d’autres mots sont placés entre eux.", example: "Exemple : « La boîte de chocolats que tu as offerte est sur la table. »" },
+        { id: "proportionnalite", matiere: "Maths", front: "Proportionnalité", back: "Deux grandeurs sont proportionnelles si on passe de l’une à l’autre en multipliant par un même nombre (coefficient).", example: "Exemple : Pour 6 œufs → 3 gâteaux ; pour 12 œufs → 6 gâteaux." },
+        { id: "conversion", matiere: "Maths", front: "Conversions d'unités", back: "Pour convertir, on multiplie ou on divise par 10, 100, 1000 selon l’unité.", example: "Exemple : 3,5 m = 350 cm (×100)." },
+        { id: "fraction_droite", matiere: "Maths", front: "Fraction sur une droite graduée", back: "Chaque graduation représente une fraction de l’unité.", example: "Exemple : droite 0 à 1 partagée en 4 → le 3e trait = 3/4." },
+        { id: "comparaison_fraction", matiere: "Maths", front: "Comparer des fractions", back: "On les met au même dénominateur ou on utilise le produit en croix.", example: "Exemple : 3/4 > 2/3 car 9/12 > 8/12." },
+        { id: "pourcentage_simple", matiere: "Maths", front: "Pourcentage", back: "Un pourcentage exprime une proportion sur 100.", example: "Exemple : 20 % de 50 € = 10 €." },
+        { id: "multiplication_decimale", matiere: "Maths", front: "Multiplication par un décimal", back: "On multiplie comme des entiers, puis on place la virgule.", example: "Exemple : 12,5 × 3 = 37,5." },
+        { id: "division_exacte", matiere: "Maths", front: "Division exacte", back: "Chercher combien de fois le diviseur est contenu dans le dividende.", example: "Exemple : 56 ÷ 8 = 7." },
+        { id: "aire_rectangle", matiere: "Maths", front: "Aire d'un rectangle", back: "Aire = longueur × largeur.", example: "Exemple : 12 m × 5 m = 60 m²." },
+        { id: "perimetre_polygone", matiere: "Maths", front: "Périmètre d'un polygone", back: "On additionne les longueurs de tous les côtés.", example: "Exemple : hexagone 2+3+1+2+3+1 = 12 cm." },
+        { id: "moyenne_tableau", matiere: "Maths", front: "Moyenne", back: "On additionne toutes les valeurs, puis on divise par le nombre de valeurs.", example: "Exemple : (12+14+10)/3 = 12." },
+        { id: "angles_triangle", matiere: "Maths", front: "Somme des angles d’un triangle", back: "La somme des trois angles d’un triangle est toujours 180°.", example: "Exemple : 60° + 60° + 60° = 180°." }
+    ];
+
+    let deck = [];
+    let currentIndex = 0;
+    let isFlipped = false;
+    let elevePrenom = "";
+    let cardStats = {};
+
+    const prenomSpan = document.getElementById('affiche-prenom');
+    const flashcardDiv = document.getElementById('flashcard');
+    const frontTitle = document.getElementById('front-title');
+    const frontContent = document.getElementById('front-content');
+    const backTitle = document.getElementById('back-title');
+    const backContent = document.getElementById('back-content');
+    const backExample = document.getElementById('back-example');
+    const cardCounter = document.getElementById('card-counter');
+    const progFill = document.getElementById('prog-fill');
+    const againBtn = document.getElementById('again-btn');
+    const goodBtn = document.getElementById('good-btn');
+    const easyBtn = document.getElementById('easy-btn');
+
+    function loadStats() {
+        const saved = localStorage.getItem(`cm2_flashcards_${elevePrenom}`);
+        if (saved) {
+            try {
+                cardStats = JSON.parse(saved);
+            } catch(e) { cardStats = {}; }
+        } else {
+            cardStats = {};
+        }
+    }
+
+    function saveStats() {
+        localStorage.setItem(`cm2_flashcards_${elevePrenom}`, JSON.stringify(cardStats));
+    }
+
+    function buildDeck() {
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        deck = CARDS.filter(card => {
+            const stat = cardStats[card.id];
+            if (!stat) return true;
+            const next = new Date(stat.nextReview);
+            next.setHours(0,0,0,0);
+            return next <= today;
+        });
+        if (deck.length === 0) {
+            deck = CARDS.filter(c => !cardStats[c.id] || cardStats[c.id].level < 3).slice(0, 10);
+        }
+        for (let i = deck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+    }
+
+    function renderCard() {
+        const card = deck[currentIndex];
+        frontTitle.textContent = card.front;
+        frontContent.textContent = card.matiere;
+        backTitle.textContent = `📖 ${card.front}`;
+        backContent.textContent = card.back;
+        backExample.textContent = card.example;
+        flashcardDiv.classList.remove('flipped');
+        isFlipped = false;
+        updateProgress();
+    }
+
+    function updateProgress() {
+        cardCounter.textContent = `Carte ${currentIndex+1} / ${deck.length}`;
+        const percent = ((currentIndex) / deck.length) * 100;
+        progFill.style.width = percent + "%";
+    }
+
+    function flipCard() {
+        flashcardDiv.classList.toggle('flipped');
+        isFlipped = !isFlipped;
+    }
+
+    function updateCard(levelDays) {
+        const card = deck[currentIndex];
+        const now = new Date();
+        const next = new Date();
+        next.setDate(now.getDate() + levelDays);
+        const stat = cardStats[card.id] || { level: 0 };
+        stat.nextReview = next.toISOString();
+        stat.level = levelDays === 7 ? Math.min((stat.level || 0) + 1, 5) : (levelDays === 3 ? (stat.level || 0) : 0);
+        cardStats[card.id] = stat;
+        saveStats();
+        envoyerProgres(card, levelDays);
+        if (currentIndex + 1 < deck.length) {
+            currentIndex++;
+            renderCard();
+        } else {
+            alert(`Session terminée ! Tu as révisé ${deck.length} cartes. Reviens demain.`);
+            window.location.href = 'index.html';
+        }
+    }
+
+    async function envoyerProgres(card, levelDays) {
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    matiere: 'Flashcards',
+                    prenom: elevePrenom,
+                    item_id: card.id,
+                    reponse: `Révision : ${card.front}`,
+                    correct: levelDays === 7 ? 2 : (levelDays === 3 ? 1 : 0),
+                    score: levelDays === 7 ? 1 : 0,
+                    explication: `Prochaine révision dans ${levelDays} jour(s)`
+                })
+            });
+        } catch(e) { console.error(e); }
+    }
+
+    const prenom = localStorage.getItem('commando_prenom');
+    if (!prenom) {
+        alert("Tu dois d'abord choisir ton prénom sur la page d'accueil.");
+        window.location.href = 'index.html';
+    } else {
+        elevePrenom = prenom;
+        prenomSpan.textContent = elevePrenom;
+        loadStats();
+        buildDeck();
+        if (deck.length === 0) {
+            alert("Aucune carte à réviser aujourd'hui ! Reviens plus tard.");
+            window.location.href = 'index.html';
+        } else {
+            currentIndex = 0;
+            renderCard();
+        }
+    }
+
+    flashcardDiv.addEventListener('click', flipCard);
+    againBtn.addEventListener('click', () => updateCard(1));
+    goodBtn.addEventListener('click', () => updateCard(3));
+    easyBtn.addEventListener('click', () => updateCard(7));
+</script>
+</body>
+</html>
