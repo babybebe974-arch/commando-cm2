@@ -1,0 +1,803 @@
+[
+  {
+    "id": "inf_sentiment",
+    "competence": "inf sentiment",
+    "taux": 0.5,
+    "variantes": [
+      {
+        "contexte": "Tom saute de joie en recevant son cadeau.",
+        "question": "Quel sentiment Tom ressent-il ?",
+        "options": [
+          "la fierté",
+          "la joie",
+          "la colère",
+          "la surprise"
+        ],
+        "correct": "la joie",
+        "explication": "Le comportement de Tom indique la joie.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Jules baisse la tête en voyant son zéro. Ses yeux s'embuent.",
+        "question": "Quel sentiment Jules ressent-il ?",
+        "options": [
+          "de la honte",
+          "la fierté",
+          "la colère",
+          "l'indifférence"
+        ],
+        "correct": "de la honte",
+        "explication": "Le comportement de Jules indique de la honte.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Zoé regarde son ami tomber. Son visage pâlit.",
+        "question": "Quel sentiment Zoé ressent-il ?",
+        "options": [
+          "de la peur",
+          "la colère",
+          "la surprise",
+          "l'indifférence"
+        ],
+        "correct": "de la peur",
+        "explication": "Le comportement de Zoé indique de la peur.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Emma fouille frénétiquement son sac perdu. Son front est en sueur.",
+        "question": "Quel sentiment Emma ressent-il ?",
+        "options": [
+          "l'inquiétude",
+          "la surprise",
+          "la fierté",
+          "l'indifférence"
+        ],
+        "correct": "l'inquiétude",
+        "explication": "Le comportement de Emma indique l'inquiétude.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Léa baisse la tête en voyant son zéro. Ses yeux s'embuent.",
+        "question": "Quel sentiment Léa ressent-il ?",
+        "options": [
+          "la colère",
+          "la fierté",
+          "l'indifférence",
+          "de la honte"
+        ],
+        "correct": "de la honte",
+        "explication": "Le comportement de Léa indique de la honte.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Manon baisse la tête en voyant son zéro. Ses yeux s'embuent.",
+        "question": "Quel sentiment Manon ressent-il ?",
+        "options": [
+          "la fierté",
+          "la colère",
+          "de la honte",
+          "l'indifférence"
+        ],
+        "correct": "de la honte",
+        "explication": "Le comportement de Manon indique de la honte.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Tom reste silencieux et fixe le vide.",
+        "question": "Quel sentiment Tom ressent-il ?",
+        "options": [
+          "la surprise",
+          "l'indifférence",
+          "la tristesse",
+          "la colère"
+        ],
+        "correct": "la tristesse",
+        "explication": "Le comportement de Tom indique la tristesse.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Zoé fouille frénétiquement son sac perdu. Son front est en sueur.",
+        "question": "Quel sentiment Zoé ressent-il ?",
+        "options": [
+          "la fierté",
+          "la surprise",
+          "l'inquiétude",
+          "la colère"
+        ],
+        "correct": "l'inquiétude",
+        "explication": "Le comportement de Zoé indique l'inquiétude.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Zoé saute de joie en recevant son cadeau.",
+        "question": "Quel sentiment Zoé ressent-il ?",
+        "options": [
+          "la joie",
+          "l'indifférence",
+          "la colère",
+          "la fierté"
+        ],
+        "correct": "la joie",
+        "explication": "Le comportement de Zoé indique la joie.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Arthur fouille frénétiquement son sac perdu. Son front est en sueur.",
+        "question": "Quel sentiment Arthur ressent-il ?",
+        "options": [
+          "la surprise",
+          "l'indifférence",
+          "l'inquiétude",
+          "la fierté"
+        ],
+        "correct": "l'inquiétude",
+        "explication": "Le comportement de Arthur indique l'inquiétude.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Lucas regarde son ami tomber. Son visage pâlit.",
+        "question": "Quel sentiment Lucas ressent-il ?",
+        "options": [
+          "l'indifférence",
+          "la colère",
+          "de la peur",
+          "la fierté"
+        ],
+        "correct": "de la peur",
+        "explication": "Le comportement de Lucas indique de la peur.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Zoé reste silencieux et fixe le vide.",
+        "question": "Quel sentiment Zoé ressent-il ?",
+        "options": [
+          "la fierté",
+          "la tristesse",
+          "la colère",
+          "l'indifférence"
+        ],
+        "correct": "la tristesse",
+        "explication": "Le comportement de Zoé indique la tristesse.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Emma regarde son ami tomber. Son visage pâlit.",
+        "question": "Quel sentiment Emma ressent-il ?",
+        "options": [
+          "la surprise",
+          "la fierté",
+          "de la peur",
+          "l'indifférence"
+        ],
+        "correct": "de la peur",
+        "explication": "Le comportement de Emma indique de la peur.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Jules regarde son ami tomber. Son visage pâlit.",
+        "question": "Quel sentiment Jules ressent-il ?",
+        "options": [
+          "la colère",
+          "de la peur",
+          "la fierté",
+          "l'indifférence"
+        ],
+        "correct": "de la peur",
+        "explication": "Le comportement de Jules indique de la peur.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Lucas regarde son ami tomber. Son visage pâlit.",
+        "question": "Quel sentiment Lucas ressent-il ?",
+        "options": [
+          "l'indifférence",
+          "la fierté",
+          "de la peur",
+          "la colère"
+        ],
+        "correct": "de la peur",
+        "explication": "Le comportement de Lucas indique de la peur.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Chloé reste silencieux et fixe le vide.",
+        "question": "Quel sentiment Chloé ressent-il ?",
+        "options": [
+          "la tristesse",
+          "la fierté",
+          "l'indifférence",
+          "la colère"
+        ],
+        "correct": "la tristesse",
+        "explication": "Le comportement de Chloé indique la tristesse.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Léa baisse la tête en voyant son zéro. Ses yeux s'embuent.",
+        "question": "Quel sentiment Léa ressent-il ?",
+        "options": [
+          "l'indifférence",
+          "de la honte",
+          "la fierté",
+          "la surprise"
+        ],
+        "correct": "de la honte",
+        "explication": "Le comportement de Léa indique de la honte.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Chloé saute de joie en recevant son cadeau.",
+        "question": "Quel sentiment Chloé ressent-il ?",
+        "options": [
+          "la fierté",
+          "l'indifférence",
+          "la colère",
+          "la joie"
+        ],
+        "correct": "la joie",
+        "explication": "Le comportement de Chloé indique la joie.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Arthur reste silencieux et fixe le vide.",
+        "question": "Quel sentiment Arthur ressent-il ?",
+        "options": [
+          "la fierté",
+          "la tristesse",
+          "l'indifférence",
+          "la colère"
+        ],
+        "correct": "la tristesse",
+        "explication": "Le comportement de Arthur indique la tristesse.",
+        "item_id": "inf_sentiment"
+      },
+      {
+        "contexte": "Emma regarde son ami tomber. Son visage pâlit.",
+        "question": "Quel sentiment Emma ressent-il ?",
+        "options": [
+          "de la peur",
+          "la surprise",
+          "la colère",
+          "la fierté"
+        ],
+        "correct": "de la peur",
+        "explication": "Le comportement de Emma indique de la peur.",
+        "item_id": "inf_sentiment"
+      }
+    ]
+  },
+  {
+    "id": "info_explicite",
+    "competence": "info explicite",
+    "taux": 0.5,
+    "variantes": [
+      {
+        "contexte": "Dans le noir, Emma allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Emma ?",
+        "options": [
+          "rien",
+          "quelque chose",
+          "autre chose",
+          "elle lit en cachette"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Sur le panneau : « École à 200 mètres ».",
+        "question": "Que fait Arthur ?",
+        "options": [
+          "rien",
+          "autre chose",
+          "quelque chose",
+          "à 200 mètres"
+        ],
+        "correct": "à 200 mètres",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Chloé allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Chloé ?",
+        "options": [
+          "rien",
+          "autre chose",
+          "elle lit en cachette",
+          "quelque chose"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Arthur allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Arthur ?",
+        "options": [
+          "autre chose",
+          "quelque chose",
+          "rien",
+          "elle lit en cachette"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Hugo allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Hugo ?",
+        "options": [
+          "quelque chose",
+          "rien",
+          "autre chose",
+          "elle lit en cachette"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Sur le panneau : « École à 200 mètres ».",
+        "question": "Que fait Lucas ?",
+        "options": [
+          "quelque chose",
+          "à 200 mètres",
+          "autre chose",
+          "rien"
+        ],
+        "correct": "à 200 mètres",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Sur le panneau : « École à 200 mètres ».",
+        "question": "Que fait Jules ?",
+        "options": [
+          "autre chose",
+          "quelque chose",
+          "à 200 mètres",
+          "rien"
+        ],
+        "correct": "à 200 mètres",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Sur le panneau : « École à 200 mètres ».",
+        "question": "Que fait Chloé ?",
+        "options": [
+          "quelque chose",
+          "rien",
+          "à 200 mètres",
+          "autre chose"
+        ],
+        "correct": "à 200 mètres",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Jules allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Jules ?",
+        "options": [
+          "autre chose",
+          "rien",
+          "quelque chose",
+          "elle lit en cachette"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Sur le panneau : « École à 200 mètres ».",
+        "question": "Que fait Chloé ?",
+        "options": [
+          "autre chose",
+          "rien",
+          "quelque chose",
+          "à 200 mètres"
+        ],
+        "correct": "à 200 mètres",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Emma allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Emma ?",
+        "options": [
+          "autre chose",
+          "elle lit en cachette",
+          "quelque chose",
+          "rien"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Lucas allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Lucas ?",
+        "options": [
+          "autre chose",
+          "rien",
+          "quelque chose",
+          "elle lit en cachette"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Emma allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Emma ?",
+        "options": [
+          "quelque chose",
+          "rien",
+          "autre chose",
+          "elle lit en cachette"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Manon tient une canne à pêche au bord de l'étang.",
+        "question": "Que fait Manon ?",
+        "options": [
+          "rien",
+          "autre chose",
+          "quelque chose",
+          "il pêche"
+        ],
+        "correct": "il pêche",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Hugo tient une canne à pêche au bord de l'étang.",
+        "question": "Que fait Hugo ?",
+        "options": [
+          "rien",
+          "quelque chose",
+          "il pêche",
+          "autre chose"
+        ],
+        "correct": "il pêche",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Sur le panneau : « École à 200 mètres ».",
+        "question": "Que fait Hugo ?",
+        "options": [
+          "quelque chose",
+          "autre chose",
+          "à 200 mètres",
+          "rien"
+        ],
+        "correct": "à 200 mètres",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Lucas tient une canne à pêche au bord de l'étang.",
+        "question": "Que fait Lucas ?",
+        "options": [
+          "il pêche",
+          "autre chose",
+          "quelque chose",
+          "rien"
+        ],
+        "correct": "il pêche",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Sur le panneau : « École à 200 mètres ».",
+        "question": "Que fait Hugo ?",
+        "options": [
+          "à 200 mètres",
+          "autre chose",
+          "quelque chose",
+          "rien"
+        ],
+        "correct": "à 200 mètres",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Jules tient une canne à pêche au bord de l'étang.",
+        "question": "Que fait Jules ?",
+        "options": [
+          "rien",
+          "autre chose",
+          "il pêche",
+          "quelque chose"
+        ],
+        "correct": "il pêche",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      },
+      {
+        "contexte": "Dans le noir, Arthur allume une lampe sous sa couverture et ouvre un livre.",
+        "question": "Que fait Arthur ?",
+        "options": [
+          "autre chose",
+          "elle lit en cachette",
+          "quelque chose",
+          "rien"
+        ],
+        "correct": "elle lit en cachette",
+        "explication": "L'information est directement donnée dans le texte.",
+        "item_id": "info_explicite"
+      }
+    ]
+  },
+  {
+    "id": "accord_sujet_eloigne",
+    "competence": "accord sujet eloigne",
+    "taux": 0.5,
+    "variantes": [
+      {
+        "contexte": "Le lot de cadeaux que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "Le lot de cadeaux que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "Le paquet de bonbons que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "Le paquet de bonbons que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "Le paquet de bonbons que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La boîte de chocolats que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "Le lot de cadeaux que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "Le lot de cadeaux que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La boîte de chocolats que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La boîte de chocolats que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      },
+      {
+        "contexte": "La liste des courses que tu as offerte … sur la table.",
+        "question": "Choisis la bonne forme du verbe.",
+        "options": [
+          "est",
+          "sont",
+          "était",
+          "étaient"
+        ],
+        "correct": "est",
+        "explication": "Le sujet est au singulier, donc le verbe s'accorde au singulier.",
+        "item_id": "accord_sujet_eloigne"
+      }
+    ]
+  }
+]
