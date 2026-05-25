@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>📋 Diagnostic initial — Commando CM2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0f;
+            color: #f0ede8;
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.5;
+            font-size: 18px;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #111118;
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 1px solid rgba(94, 207, 177, 0.2);
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .gold {
+            color: #e8c87a;
+        }
+        .sub {
+            color: #9aaec9;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .question-card {
+            background: #0c1222;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .mini-texte {
+            background: #1e2a3e;
+            border-left: 4px solid #5ecfb1;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin: 1rem 0;
+        }
+        .opt {
+            background: #1e2a3e;
+            border-radius: 60px;
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+            transition: 0.1s;
+            font-size: 0.9rem;
+        }
+        .opt:hover {
+            background: #2a3652;
+        }
+        .opt.selected {
+            background: #2a3652;
+            border: 1px solid #5ecfb1;
+        }
+        .feedback {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .feedback.correct {
+            background: #1e3a2e;
+            color: #b9f6d0;
+            display: block;
+        }
+        .feedback.wrong {
+            background: #3a2525;
+            color: #ffc9c9;
+            display: block;
+        }
+        .button-group {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        button {
+            background: #1e2a3e;
+            border: none;
+            border-radius: 60px;
+            padding: 0.8rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.1s;
+            flex: 1;
+        }
+        button.primary {
+            background: linear-gradient(135deg, #5ecfb1, #3aad8a);
+            color: #0a0a0f;
+            font-weight: 800;
+        }
+        button.primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+        }
+        .progress-bar-bg {
+            background: #1e2a3e;
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .progress-fill {
+            background: #5ecfb1;
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s;
+        }
+        .recap {
+            background: #0c1222;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .recap-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #2a3452;
+            font-size: 0.85rem;
+        }
+        .badge-correct {
+            color: #7ecf8a;
+        }
+        .badge-wrong {
+            color: #f55a5a;
+        }
+        .toast {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            background: #2c2c3a;
+            border-radius: 60px;
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 100;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+        hr {
+            border-color: #2a3452;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div id="welcome-screen">
+        <h1>Diagnostic <span class="gold">initial</span></h1>
+        <div class="sub">30 questions pour identifier ce que tu maîtrises déjà.</div>
+        <div id="prenom-display" style="margin: 1rem 0; font-weight: bold;">👤 Prénom : <span id="affiche-prenom"></span></div>
+        <button class="primary" id="start-btn">Commencer le diagnostic →</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div class="progress">
+            <span id="question-counter">Question 1 / 30</span>
+            <span>⚡ En cours</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-fill" id="prog-fill"></div></div>
+        <div class="question-card">
+            <div id="mini-texte" class="mini-texte" style="display:none;"></div>
+            <div class="q-text" id="question-text"></div>
+            <div id="options-container" class="options"></div>
+            <div id="feedback-area" class="feedback"></div>
+            <div class="button-group">
+                <button id="validate-btn" disabled>Valider ma réponse</button>
+                <button id="dunno-btn" class="secondary">❓ Je ne sais pas</button>
+            </div>
+            <button id="next-btn" style="display:none;" class="primary">➡ Question suivante</button>
+        </div>
+    </div>
+
+    <div id="recap-screen" style="display:none;">
+        <h2>✅ Diagnostic terminé</h2>
+        <div id="recap-content" class="recap"></div>
+        <button id="save-final-btn" class="primary">💾 Sauvegarder mes résultats</button>
+        <button id="restart-btn" class="secondary">🔄 Recommencer</button>
+        <p style="font-size:0.7rem; text-align:center; margin-top:1rem;">Les résultats seront envoyés à ton enseignant.</p>
+    </div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+    // ========== URL DU SCRIPT GOOGLE SHEET ==========
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDgu0ErJHRYBC8Glo4GXB7UbizWmsvFgaRh8lHUzqTEf7znlrb35l_DNiXYd9lTakq/exec';
+
+    // ========== BANQUE D'ITEMS (30 questions, français + maths) ==========
+    const BANQUE = [
+        // Français – inférence
+        { matiere: "Français", item_id: "inf_sentiment", texte: "Tom regarde son ami tomber. Son visage pâlit.", question: "Quel sentiment Tom ressent-il ?", options: ["de la peur", "de la tristesse", "de l'indifférence", "de la moquerie"], correct: "de la peur", explication: "La pâleur trahit la peur." },
+        { matiere: "Français", item_id: "inf_sentiment", texte: "Lucie baisse la tête en voyant son zéro. Ses yeux s'embuent.", question: "Quel sentiment Lucie éprouve-t-elle ?", options: ["de la colère", "de la honte", "de la joie", "de la fierté"], correct: "de la honte", explication: "Baisser la tête et pleurer sont des signes de honte." },
+        { matiere: "Français", item_id: "info_explicite", texte: "Dans le noir, Léa allume une lampe sous sa couverture et ouvre un livre.", question: "Que fait Léa ?", options: ["elle lit en cachette", "elle joue à un jeu", "elle dort", "elle écoute de la musique"], correct: "elle lit en cachette", explication: "Elle lit car elle ouvre un livre." },
+        { matiere: "Français", item_id: "sens_nocturne", texte: "Les visites nocturnes du chat sont fréquentes.", question: "Que signifie « nocturnes » ?", options: ["qui arrivent le matin", "qui se passent la nuit", "qui sont silencieuses", "qui sont rapides"], correct: "qui se passent la nuit", explication: "Nocturne = relatif à la nuit." },
+        { matiere: "Français", item_id: "imparfait", texte: "Quand j'étais petit, je … au parc tous les jours.", question: "Conjuguez le verbe « aller » à l'imparfait.", options: ["vais", "allais", "irai", "suis allé"], correct: "allais", explication: "L'imparfait pour une habitude." },
+        { matiere: "Français", item_id: "expression_imagée", texte: "", question: "« Il a le cœur sur la main. » Que signifie cette expression ?", options: ["il est généreux", "il est triste", "il est en colère", "il est fatigué"], correct: "il est généreux", explication: "Avoir le cœur sur la main = être généreux." },
+        { matiere: "Français", item_id: "synonyme", texte: "Ce repas est délicieux.", question: "Quel mot pourrait remplacer « délicieux » ?", options: ["fade", "succulent", "amer", "salé"], correct: "succulent", explication: "Succulent = très bon." },
+        { matiere: "Français", item_id: "prefixe_anti", texte: "", question: "Parmi ces mots, un seul ne contient pas le préfixe « anti- ». Lequel ?", options: ["antiallergique", "antigel", "antilope", "antivol"], correct: "antilope", explication: "Antilope est un nom d’animal." },
+        { matiere: "Français", item_id: "suffixe_able", texte: "Cette vitre est incassable.", question: "Que signifie le suffixe « -able » ?", options: ["qu'on peut la casser", "qu'on ne peut pas la casser", "qu'on peut la voir", "qu'on peut la traverser"], correct: "qu'on ne peut pas la casser", explication: "Incassable = que l'on ne peut pas casser." },
+        { matiere: "Français", item_id: "accord_sujet_eloigne", texte: "La boîte de chocolats que tu as offerte … sur la table.", question: "Choisis la bonne forme du verbe.", options: ["est", "sont", "était", "étaient"], correct: "est", explication: "Le sujet est « la boîte » (singulier)." },
+        // Maths – proportionnalité
+        { matiere: "Maths", item_id: "proportionnalite", texte: "Pour 6 personnes, il faut 3 œufs.", question: "Combien d'œufs pour 18 personnes ?", options: ["6", "9", "12", "15"], correct: "9", explication: "18 ÷ 6 = 3, donc 3 × 3 = 9 œufs." },
+        { matiere: "Maths", item_id: "conversion", texte: "1 m = 100 cm", question: "3,5 m = ... cm", options: ["35", "350", "3500", "35000"], correct: "350", explication: "3,5 × 100 = 350 cm." },
+        { matiere: "Maths", item_id: "fraction_droite", texte: "Une droite graduée de 0 à 1 partagée en 4 parts. La flèche est sur le 3e trait.", question: "Quelle fraction représente la flèche ?", options: ["1/4", "2/4", "3/4", "4/4"], correct: "3/4", explication: "3e trait sur 4 = 3/4." },
+        { matiere: "Maths", item_id: "comparaison_fraction", texte: "", question: "Compare 3/4 et 2/3 : 3/4 … 2/3", options: ["<", ">", "="], correct: ">", explication: "3/4 = 0,75 ; 2/3 ≈ 0,666." },
+        { matiere: "Maths", item_id: "pourcentage_simple", texte: "", question: "20 % de 50 € = ?", options: ["5 €", "10 €", "15 €", "20 €"], correct: "10 €", explication: "50 × 0,20 = 10." },
+        { matiere: "Maths", item_id: "multiplication_decimale", texte: "", question: "12,5 × 3 = ?", options: ["36,5", "37,5", "38,5", "39,5"], correct: "37,5", explication: "12,5 × 3 = 37,5." },
+        { matiere: "Maths", item_id: "division_exacte", texte: "", question: "56 ÷ 8 = ?", options: ["5", "6", "7", "8"], correct: "7", explication: "8 × 7 = 56." },
+        { matiere: "Maths", item_id: "aire_rectangle", texte: "Un rectangle a une longueur de 12 m et une largeur de 5 m.", question: "Quelle est son aire ?", options: ["17 m²", "34 m²", "60 m²", "120 m²"], correct: "60 m²", explication: "12 × 5 = 60 m²." },
+        { matiere: "Maths", item_id: "perimetre_polygone", texte: "Un hexagone a des côtés de 2, 3, 1, 2, 3, 1 cm.", question: "Quel est son périmètre ?", options: ["10 cm", "11 cm", "12 cm", "13 cm"], correct: "12 cm", explication: "2+3+1+2+3+1 = 12." },
+        { matiere: "Maths", item_id: "moyenne_tableau", texte: "Notes : 12, 14, 10", question: "Quelle est la moyenne ?", options: ["10", "11", "12", "13"], correct: "12", explication: "(12+14+10)/3 = 12." },
+        // Ajout de quelques autres pour atteindre 30 (on va dupliquer avec variantes)
+        { matiere: "Français", item_id: "inf_sentiment", texte: "En voyant le serpent, il recule d'un pas et ses jambes tremblent.", question: "Quel sentiment éprouve-t-il ?", options: ["la curiosité", "la peur", "la joie", "la colère"], correct: "la peur", explication: "Reculer et trembler sont des signes de peur." },
+        { matiere: "Français", item_id: "info_explicite", texte: "Le panneau indique « École à 200 mètres ».", question: "Où se trouve l'école ?", options: ["à 200 m", "à 500 m", "à 1 km", "à côté du panneau"], correct: "à 200 m", explication: "Le panneau donne 200 m." },
+        { matiere: "Maths", item_id: "proportionnalite", texte: "Pour 3 croissants, on paie 2,10 €.", question: "Combien pour 5 croissants ?", options: ["3,00 €", "3,50 €", "4,00 €", "4,50 €"], correct: "3,50 €", explication: "2,10 ÷ 3 = 0,70 ; 0,70 × 5 = 3,50." },
+        { matiere: "Maths", item_id: "conversion", texte: "1 L = 100 cL", question: "2,25 L = ... cL", options: ["22,5", "225", "2250", "22500"], correct: "225", explication: "2,25 × 100 = 225 cL." },
+        { matiere: "Français", item_id: "accord_sujet_eloigne", texte: "Le paquet de bonbons que tu as achetés … sur la table.", question: "Choisis la bonne forme.", options: ["est", "sont", "était", "étaient"], correct: "est", explication: "Le sujet est « le paquet »." },
+        { matiere: "Français", item_id: "expression_imagée", texte: "", question: "« Être à l’ouest » signifie...", options: ["être perdu", "être en colère", "être fatigué", "être heureux"], correct: "être perdu", explication: "Être à l’ouest = être désorienté." },
+        { matiere: "Maths", item_id: "fraction_droite", texte: "Une droite graduée de 0 à 1 partagée en 5 parts. Flèche au 2e trait.", question: "Fraction ?", options: ["1/5", "2/5", "3/5", "4/5"], correct: "2/5", explication: "2e trait = 2/5." },
+        { matiere: "Maths", item_id: "pourcentage_simple", texte: "", question: "30 % de 60 € = ?", options: ["12 €", "15 €", "18 €", "20 €"], correct: "18 €", explication: "60 × 0,30 = 18." },
+        { matiere: "Français", item_id: "synonyme", texte: "Cette voiture est rapide.", question: "Synonyme de « rapide » ?", options: ["lente", "véloce", "grande", "lourde"], correct: "véloce", explication: "Véloce = rapide." }
+    ];
+
+    // Mélanger et prendre 30 questions
+    let questions = [];
+    let currentIndex = 0;
+    let userAnswers = [];
+    let currentQuestionValidated = false;
+    let selectedOptionValue = null;
+    let currentOptionsOrder = [];
+    let elevePrenom = "";
+
+    // DOM elements
+    const welcomeDiv = document.getElementById('welcome-screen');
+    const quizDiv = document.getElementById('quiz-screen');
+    const recapDiv = document.getElementById('recap-screen');
+    const prenomSpan = document.getElementById('affiche-prenom');
+    const startBtn = document.getElementById('start-btn');
+    const validateBtn = document.getElementById('validate-btn');
+    const dunnoBtn = document.getElementById('dunno-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const saveFinalBtn = document.getElementById('save-final-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const questionText = document.getElementById('question-text');
+    const miniTexteDiv = document.getElementById('mini-texte');
+    const optionsContainer = document.getElementById('options-container');
+    const feedbackDiv = document.getElementById('feedback-area');
+    const counterSpan = document.getElementById('question-counter');
+    const progFill = document.getElementById('prog-fill');
+    const recapContent = document.getElementById('recap-content');
+
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function getShuffledOptions(exo) {
+        let opts = exo.options.map(opt => ({ value: opt, isCorrect: (opt === exo.correct) }));
+        return shuffleArray([...opts]);
+    }
+
+    function saveProgress() {
+        const toStore = { currentIndex, userAnswers, prenom: elevePrenom };
+        localStorage.setItem('cm2_diag_progress', JSON.stringify(toStore));
+    }
+
+    function loadProgress() {
+        const saved = localStorage.getItem('cm2_diag_progress');
+        if (!saved) return false;
+        try {
+            const data = JSON.parse(saved);
+            if (data.userAnswers && data.userAnswers.length === data.currentIndex && data.currentIndex < questions.length) {
+                currentIndex = data.currentIndex;
+                userAnswers = data.userAnswers;
+                elevePrenom = data.prenom || "";
+                return true;
+            } else if (data.currentIndex === questions.length) {
+                currentIndex = data.currentIndex;
+                userAnswers = data.userAnswers;
+                elevePrenom = data.prenom || "";
+                showRecap();
+                return true;
+            }
+        } catch(e) {}
+        return false;
+    }
+
+    function clearProgress() {
+        localStorage.removeItem('cm2_diag_progress');
+    }
+
+    function registerAnswer(isCorrect, selectedAnswer, correctAnswer, explication, item_id, matiere) {
+        userAnswers.push({
+            question: currentQuestion.question,
+            answer: selectedAnswer || "(aucune réponse)",
+            isCorrect: isCorrect,
+            correctAnswer: correctAnswer,
+            explication: explication,
+            item_id: item_id,
+            matiere: matiere
+        });
+        feedbackDiv.innerHTML = isCorrect
+            ? `✅ Bonne réponse !<br>${explication}`
+            : `❌ Mauvaise réponse. La bonne réponse était : "${correctAnswer}".<br>${explication}`;
+        feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+        currentQuestionValidated = true;
+        validateBtn.disabled = true;
+        dunnoBtn.disabled = true;
+        nextBtn.style.display = 'block';
+        saveProgress();
+    }
+
+    function validateAnswer() {
+        if (currentQuestionValidated) return;
+        if (!selectedOptionValue) return;
+        const isCorrect = (selectedOptionValue === currentQuestion.correct);
+        registerAnswer(isCorrect, selectedOptionValue, currentQuestion.correct, currentQuestion.explication, currentQuestion.item_id, currentQuestion.matiere);
+    }
+
+    function dunno() {
+        if (currentQuestionValidated) return;
+        registerAnswer(false, null, currentQuestion.correct, currentQuestion.explication, currentQuestion.item_id, currentQuestion.matiere);
+    }
+
+    function nextQuestion() {
+        if (!currentQuestionValidated) return;
+        if (currentIndex + 1 < questions.length) {
+            currentIndex++;
+            showQuestion(currentIndex);
+            updateProgress();
+            saveProgress();
+        } else {
+            showRecap();
+        }
+    }
+
+    function showQuestion(index) {
+        currentQuestionValidated = false;
+        selectedOptionValue = null;
+        validateBtn.disabled = true;
+        dunnoBtn.disabled = false;
+        nextBtn.style.display = 'none';
+        feedbackDiv.className = 'feedback';
+        feedbackDiv.style.display = 'none';
+        feedbackDiv.innerHTML = '';
+
+        const q = questions[index];
+        if (q.texte && q.texte.trim() !== "") {
+            miniTexteDiv.style.display = 'block';
+            miniTexteDiv.innerHTML = `📖 ${q.texte}`;
+        } else {
+            miniTexteDiv.style.display = 'none';
+        }
+        questionText.innerText = q.question;
+        currentOptionsOrder = getShuffledOptions(q);
+        optionsContainer.innerHTML = '';
+        currentOptionsOrder.forEach(opt => {
+            const btn = document.createElement('div');
+            btn.className = 'opt';
+            btn.innerText = opt.value;
+            btn.addEventListener('click', () => {
+                if (currentQuestionValidated) return;
+                document.querySelectorAll('.opt').forEach(el => el.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedOptionValue = opt.value;
+                validateBtn.disabled = false;
+            });
+            optionsContainer.appendChild(btn);
+        });
+        counterSpan.innerText = `Question ${index+1} / ${questions.length}`;
+        updateProgress();
+    }
+
+    function updateProgress() {
+        let percent = (currentIndex / questions.length) * 100;
+        progFill.style.width = percent + "%";
+    }
+
+    function showRecap() {
+        quizDiv.style.display = 'none';
+        recapDiv.style.display = 'block';
+        const correctCount = userAnswers.filter(a => a.isCorrect).length;
+        const total = questions.length;
+        let message = "";
+        if (correctCount >= 24) message = "🏆 Excellent ! Tu es très bien préparé(e) !";
+        else if (correctCount >= 18) message = "🎉 Très bien ! Quelques points à renforcer.";
+        else if (correctCount >= 12) message = "💪 Bon travail, continue l’entraînement !";
+        else message = "🌱 Chaque erreur est une leçon. Tu vas progresser !";
+
+        recapContent.innerHTML = `
+            <div style="text-align:center; margin-bottom:1rem;">
+                <span style="font-size:2rem;">${correctCount}/${total}</span><br>
+                <span style="font-size:0.8rem;">bonnes réponses</span>
+                <div style="margin-top:0.5rem;">👤 ${elevePrenom}<br>${message}</div>
+            </div>
+            <hr>
+        `;
+        userAnswers.forEach((ans, idx) => {
+            const statusClass = ans.isCorrect ? 'badge-correct' : 'badge-wrong';
+            const statusText = ans.isCorrect ? '✓' : '✗';
+            recapContent.innerHTML += `
+                <div class="recap-item">
+                    <span><strong>${idx+1}</strong> ${ans.question.substring(0, 60)}...</span>
+                    <span class="${statusClass}">${statusText} ${ans.isCorrect ? ans.answer : ans.correctAnswer}</span>
+                </div>
+            `;
+        });
+        clearProgress();
+    }
+
+    async function finalSave() {
+        const btn = saveFinalBtn;
+        btn.textContent = "Envoi en cours...";
+        btn.disabled = true;
+        let successCount = 0;
+        for (let ans of userAnswers) {
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        matiere: ans.matiere,
+                        prenom: elevePrenom,
+                        item_id: ans.item_id || "inconnu",
+                        reponse: ans.answer,
+                        correct: ans.isCorrect ? 1 : 0,
+                        score: ans.isCorrect ? 1 : 0,
+                        explication: ans.explication
+                    })
+                });
+                if (response.ok) successCount++;
+            } catch(e) { console.error(e); }
+        }
+        btn.textContent = "💾 Résultats sauvegardés";
+        showToast(`${successCount}/${userAnswers.length} réponses enregistrées.`);
+        btn.disabled = false;
+    }
+
+    function restartEvaluation() {
+        clearProgress();
+        currentIndex = 0;
+        userAnswers = [];
+        welcomeDiv.style.display = 'block';
+        recapDiv.style.display = 'none';
+        quizDiv.style.display = 'none';
+        saveFinalBtn.disabled = false;
+        saveFinalBtn.textContent = "💾 Sauvegarder mes résultats";
+    }
+
+    function startEvaluation() {
+        const prenom = localStorage.getItem('commando_prenom');
+        if (!prenom) {
+            alert("Tu dois d'abord choisir ton prénom sur la page d'accueil.");
+            window.location.href = 'index.html';
+            return;
+        }
+        elevePrenom = prenom;
+        prenomSpan.textContent = elevePrenom;
+        welcomeDiv.style.display = 'none';
+        quizDiv.style.display = 'block';
+        // Mélanger la banque et prendre 30 questions
+        const pool = shuffleArray([...BANQUE]);
+        questions = pool.slice(0, 30);
+        currentIndex = 0;
+        userAnswers = [];
+        showQuestion(0);
+        updateProgress();
+        saveProgress();
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    startBtn.addEventListener('click', startEvaluation);
+    validateBtn.addEventListener('click', validateAnswer);
+    dunnoBtn.addEventListener('click', dunno);
+    nextBtn.addEventListener('click', nextQuestion);
+    saveFinalBtn.addEventListener('click', finalSave);
+    restartBtn.addEventListener('click', restartEvaluation);
+
+    // Vérifier s'il y a une progression en cours
+    const savedProgress = loadProgress();
+    if (savedProgress && currentIndex < questions.length && currentIndex > 0) {
+        welcomeDiv.style.display = 'none';
+        quizDiv.style.display = 'block';
+        showQuestion(currentIndex);
+        updateProgress();
+    } else {
+        welcomeDiv.style.display = 'block';
+        const prenom = localStorage.getItem('commando_prenom');
+        if (prenom) prenomSpan.textContent = prenom;
+        else prenomSpan.textContent = "(non sélectionné)";
+    }
+</script>
+</body>
+</html>
