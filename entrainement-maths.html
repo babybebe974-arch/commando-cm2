@@ -16,7 +16,6 @@
             color: #f0ede8;
             font-family: 'DM Sans', sans-serif;
             line-height: 1.5;
-            font-size: 18px;
             padding: 1rem;
             min-height: 100vh;
         }
@@ -39,7 +38,7 @@
         }
         .sub {
             color: #9aaec9;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             font-size: 0.9rem;
         }
         .question-card {
@@ -174,19 +173,27 @@
             color: #5ecfb1;
             font-size: 0.8rem;
         }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Entraînement <span class="gold">Maths</span></h1>
-    <div class="sub">Exercices aléatoires · Double dose sur les notions difficiles</div>
+    <div class="sub">400 exercices · Niveau CM2 · Aléatoire</div>
     <div id="prenom-display" style="margin-bottom:1rem; font-weight:bold;">👤 Élève : <span id="affiche-prenom"></span></div>
-    <div class="progress">
-        <span id="session-counter">Question 1 / 10</span>
-        <span id="score-session">Score : 0</span>
-    </div>
-    <div class="progress-bar-bg"><div class="progress-fill" id="prog-fill"></div></div>
-    <div id="quiz-area">
+
+    <div id="loading" class="loading">Chargement des exercices...</div>
+
+    <div id="quiz-area" style="display:none;">
+        <div class="progress">
+            <span id="session-counter">Question 1 / 10</span>
+            <span id="score-session">Score : 0</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-fill" id="prog-fill"></div></div>
         <div class="question-card">
             <div id="mini-texte" class="mini-texte" style="display:none;"></div>
             <div class="q-text" id="question-text"></div>
@@ -204,29 +211,9 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ========== URL DU SCRIPT GOOGLE SHEET ==========
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDgu0ErJHRYBC8Glo4GXB7UbizWmsvFgaRh8lHUzqTEf7znlrb35l_DNiXYd9lTakq/exec';
 
-    // ========== BANQUE D'EXERCICES MATHS (niveau CM2, variées) ==========
-    const EXERCICES = [
-        { texte: "Pour 6 personnes, il faut 3 œufs.", question: "Combien d'œufs pour 18 personnes ?", options: ["6", "9", "12", "15"], correct: "9", explication: "18 ÷ 6 = 3, donc 3 × 3 = 9 œufs.", item_id: "proportionnalite" },
-        { texte: "1 m = 100 cm", question: "3,5 m = ... cm", options: ["35", "350", "3500", "35000"], correct: "350", explication: "3,5 × 100 = 350 cm.", item_id: "conversion" },
-        { texte: "Une droite graduée de 0 à 1 partagée en 4 parts. La flèche est sur le 3e trait.", question: "Quelle fraction représente la flèche ?", options: ["1/4", "2/4", "3/4", "4/4"], correct: "3/4", explication: "3e trait sur 4 = 3/4.", item_id: "fraction_droite" },
-        { texte: "", question: "Compare 3/4 et 2/3 : 3/4 … 2/3", options: ["<", ">", "="], correct: ">", explication: "3/4 = 0,75 ; 2/3 ≈ 0,666.", item_id: "comparaison_fraction" },
-        { texte: "", question: "20 % de 50 € = ?", options: ["5 €", "10 €", "15 €", "20 €"], correct: "10 €", explication: "50 × 0,20 = 10.", item_id: "pourcentage_simple" },
-        { texte: "", question: "12,5 × 3 = ?", options: ["36,5", "37,5", "38,5", "39,5"], correct: "37,5", explication: "12,5 × 3 = 37,5.", item_id: "multiplication_decimale" },
-        { texte: "", question: "56 ÷ 8 = ?", options: ["5", "6", "7", "8"], correct: "7", explication: "8 × 7 = 56.", item_id: "division_exacte" },
-        { texte: "Un rectangle a une longueur de 12 m et une largeur de 5 m.", question: "Quelle est son aire ?", options: ["17 m²", "34 m²", "60 m²", "120 m²"], correct: "60 m²", explication: "12 × 5 = 60 m².", item_id: "aire_rectangle" },
-        { texte: "Un hexagone a des côtés de 2, 3, 1, 2, 3, 1 cm.", question: "Quel est son périmètre ?", options: ["10 cm", "11 cm", "12 cm", "13 cm"], correct: "12 cm", explication: "2+3+1+2+3+1 = 12.", item_id: "perimetre_polygone" },
-        { texte: "Notes : 12, 14, 10", question: "Quelle est la moyenne ?", options: ["10", "11", "12", "13"], correct: "12", explication: "(12+14+10)/3 = 12.", item_id: "moyenne_tableau" },
-        { texte: "Pour 3 croissants, on paie 2,10 €.", question: "Combien pour 5 croissants ?", options: ["3,00 €", "3,50 €", "4,00 €", "4,50 €"], correct: "3,50 €", explication: "2,10 ÷ 3 = 0,70 ; 0,70 × 5 = 3,50.", item_id: "proportionnalite" },
-        { texte: "1 L = 100 cL", question: "2,25 L = ... cL", options: ["22,5", "225", "2250", "22500"], correct: "225", explication: "2,25 × 100 = 225 cL.", item_id: "conversion" },
-        { texte: "Une droite graduée de 0 à 1 partagée en 5 parts. Flèche au 2e trait.", question: "Fraction ?", options: ["1/5", "2/5", "3/5", "4/5"], correct: "2/5", explication: "2e trait = 2/5.", item_id: "fraction_droite" },
-        { texte: "", question: "30 % de 60 € = ?", options: ["12 €", "15 €", "18 €", "20 €"], correct: "18 €", explication: "60 × 0,30 = 18.", item_id: "pourcentage_simple" },
-        { texte: "Un carré a un côté de 6 cm.", question: "Quel est son périmètre ?", options: ["12 cm", "18 cm", "24 cm", "36 cm"], correct: "24 cm", explication: "4 × 6 = 24 cm.", item_id: "perimetre_carre" },
-        { texte: "Un triangle a des angles de 60°, 60°, ?", question: "Quelle est la mesure du troisième angle ?", options: ["30°", "60°", "90°", "120°"], correct: "60°", explication: "Somme des angles = 180°, donc 180-120 = 60°.", item_id: "angles_triangle" }
-    ];
-
+    let exercices = [];
     let currentExercice = null;
     let currentQuestionValidated = false;
     let selectedOptionValue = null;
@@ -236,6 +223,8 @@
     let elevePrenom = "";
 
     const prenomSpan = document.getElementById('affiche-prenom');
+    const loadingDiv = document.getElementById('loading');
+    const quizDiv = document.getElementById('quiz-area');
     const questionText = document.getElementById('question-text');
     const miniTexteDiv = document.getElementById('mini-texte');
     const optionsContainer = document.getElementById('options-container');
@@ -261,8 +250,9 @@
     }
 
     function pickRandomExercice() {
-        const randomIndex = Math.floor(Math.random() * EXERCICES.length);
-        return { ...EXERCICES[randomIndex] };
+        if (exercices.length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * exercices.length);
+        return { ...exercices[randomIndex] };
     }
 
     function loadNewExercice() {
@@ -276,9 +266,11 @@
         feedbackDiv.innerHTML = '';
 
         currentExercice = pickRandomExercice();
-        if (currentExercice.texte && currentExercice.texte.trim() !== "") {
+        if (!currentExercice) return;
+
+        if (currentExercice.contexte && currentExercice.contexte.trim() !== "") {
             miniTexteDiv.style.display = 'block';
-            miniTexteDiv.innerHTML = `📖 ${currentExercice.texte}`;
+            miniTexteDiv.innerHTML = `📖 ${currentExercice.contexte}`;
         } else {
             miniTexteDiv.style.display = 'none';
         }
@@ -313,7 +305,6 @@
             : `❌ Mauvaise réponse. La bonne réponse était : "${currentExercice.correct}".<br>${currentExercice.explication}`;
         feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
 
-        // Envoi au Sheet
         envoyerResultat(isCorrect);
 
         currentQuestionValidated = true;
@@ -336,7 +327,7 @@
                 body: JSON.stringify({
                     matiere: 'Maths',
                     prenom: elevePrenom,
-                    item_id: currentExercice.item_id,
+                    item_id: currentExercice.item_id || "inconnu",
                     reponse: selectedOptionValue || "(aucune)",
                     correct: isCorrect ? 1 : 0,
                     score: isCorrect ? 1 : 0,
@@ -368,7 +359,36 @@
         }
     }
 
-    // Initialisation
+    async function chargerExercices() {
+        try {
+            const response = await fetch('exos_maths.json');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            exercices = [];
+            for (let item of data) {
+                if (item.variantes && Array.isArray(item.variantes)) {
+                    for (let variante of item.variantes) {
+                        exercices.push({
+                            contexte: variante.contexte || "",
+                            question: variante.question,
+                            options: variante.options,
+                            correct: variante.correct,
+                            explication: variante.explication,
+                            item_id: item.id
+                        });
+                    }
+                }
+            }
+            if (exercices.length === 0) throw new Error("Aucun exercice trouvé dans le fichier JSON");
+            loadingDiv.style.display = 'none';
+            quizDiv.style.display = 'block';
+            loadNewExercice();
+        } catch(err) {
+            console.error(err);
+            loadingDiv.innerHTML = '⚠️ Erreur de chargement des exercices. Vérifie que le fichier exos_maths.json est bien présent à la racine.';
+        }
+    }
+
     const prenom = localStorage.getItem('commando_prenom');
     if (!prenom) {
         alert("Tu dois d'abord choisir ton prénom sur la page d'accueil.");
@@ -376,7 +396,7 @@
     } else {
         elevePrenom = prenom;
         prenomSpan.textContent = elevePrenom;
-        loadNewExercice();
+        chargerExercices();
     }
 
     validateBtn.addEventListener('click', validateAnswer);
