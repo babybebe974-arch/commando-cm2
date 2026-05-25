@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🧮 Entraînement Maths — Commando CM2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0f;
+            color: #f0ede8;
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.5;
+            font-size: 18px;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #111118;
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 1px solid rgba(94, 207, 177, 0.2);
+        }
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .gold {
+            color: #e8c87a;
+        }
+        .sub {
+            color: #9aaec9;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .question-card {
+            background: #0c1222;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .mini-texte {
+            background: #1e2a3e;
+            border-left: 4px solid #5ecfb1;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        .q-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin: 1rem 0;
+        }
+        .opt {
+            background: #1e2a3e;
+            border-radius: 60px;
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+            transition: 0.1s;
+            font-size: 0.9rem;
+        }
+        .opt:hover {
+            background: #2a3652;
+        }
+        .opt.selected {
+            background: #2a3652;
+            border: 1px solid #5ecfb1;
+        }
+        .feedback {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .feedback.correct {
+            background: #1e3a2e;
+            color: #b9f6d0;
+            display: block;
+        }
+        .feedback.wrong {
+            background: #3a2525;
+            color: #ffc9c9;
+            display: block;
+        }
+        .button-group {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        button {
+            background: #1e2a3e;
+            border: none;
+            border-radius: 60px;
+            padding: 0.8rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.1s;
+            flex: 1;
+        }
+        button.primary {
+            background: linear-gradient(135deg, #5ecfb1, #3aad8a);
+            color: #0a0a0f;
+            font-weight: 800;
+        }
+        button.primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+        }
+        .progress-bar-bg {
+            background: #1e2a3e;
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .progress-fill {
+            background: #5ecfb1;
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s;
+        }
+        .toast {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            background: #2c2c3a;
+            border-radius: 60px;
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 100;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+        .back-home {
+            display: inline-block;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: #5ecfb1;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Entraînement <span class="gold">Maths</span></h1>
+    <div class="sub">Exercices aléatoires · Double dose sur les notions difficiles</div>
+    <div id="prenom-display" style="margin-bottom:1rem; font-weight:bold;">👤 Élève : <span id="affiche-prenom"></span></div>
+    <div class="progress">
+        <span id="session-counter">Question 1 / 10</span>
+        <span id="score-session">Score : 0</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-fill" id="prog-fill"></div></div>
+    <div id="quiz-area">
+        <div class="question-card">
+            <div id="mini-texte" class="mini-texte" style="display:none;"></div>
+            <div class="q-text" id="question-text"></div>
+            <div id="options-container" class="options"></div>
+            <div id="feedback-area" class="feedback"></div>
+            <div class="button-group">
+                <button id="validate-btn" disabled>Valider</button>
+                <button id="dunno-btn" class="secondary">❓ Je ne sais pas</button>
+            </div>
+            <button id="next-btn" style="display:none;" class="primary">➡ Exercice suivant</button>
+        </div>
+    </div>
+    <a href="index.html" class="back-home">← Retour à l'accueil</a>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+    // ========== URL DU SCRIPT GOOGLE SHEET ==========
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDgu0ErJHRYBC8Glo4GXB7UbizWmsvFgaRh8lHUzqTEf7znlrb35l_DNiXYd9lTakq/exec';
+
+    // ========== BANQUE D'EXERCICES MATHS (niveau CM2, variées) ==========
+    const EXERCICES = [
+        { texte: "Pour 6 personnes, il faut 3 œufs.", question: "Combien d'œufs pour 18 personnes ?", options: ["6", "9", "12", "15"], correct: "9", explication: "18 ÷ 6 = 3, donc 3 × 3 = 9 œufs.", item_id: "proportionnalite" },
+        { texte: "1 m = 100 cm", question: "3,5 m = ... cm", options: ["35", "350", "3500", "35000"], correct: "350", explication: "3,5 × 100 = 350 cm.", item_id: "conversion" },
+        { texte: "Une droite graduée de 0 à 1 partagée en 4 parts. La flèche est sur le 3e trait.", question: "Quelle fraction représente la flèche ?", options: ["1/4", "2/4", "3/4", "4/4"], correct: "3/4", explication: "3e trait sur 4 = 3/4.", item_id: "fraction_droite" },
+        { texte: "", question: "Compare 3/4 et 2/3 : 3/4 … 2/3", options: ["<", ">", "="], correct: ">", explication: "3/4 = 0,75 ; 2/3 ≈ 0,666.", item_id: "comparaison_fraction" },
+        { texte: "", question: "20 % de 50 € = ?", options: ["5 €", "10 €", "15 €", "20 €"], correct: "10 €", explication: "50 × 0,20 = 10.", item_id: "pourcentage_simple" },
+        { texte: "", question: "12,5 × 3 = ?", options: ["36,5", "37,5", "38,5", "39,5"], correct: "37,5", explication: "12,5 × 3 = 37,5.", item_id: "multiplication_decimale" },
+        { texte: "", question: "56 ÷ 8 = ?", options: ["5", "6", "7", "8"], correct: "7", explication: "8 × 7 = 56.", item_id: "division_exacte" },
+        { texte: "Un rectangle a une longueur de 12 m et une largeur de 5 m.", question: "Quelle est son aire ?", options: ["17 m²", "34 m²", "60 m²", "120 m²"], correct: "60 m²", explication: "12 × 5 = 60 m².", item_id: "aire_rectangle" },
+        { texte: "Un hexagone a des côtés de 2, 3, 1, 2, 3, 1 cm.", question: "Quel est son périmètre ?", options: ["10 cm", "11 cm", "12 cm", "13 cm"], correct: "12 cm", explication: "2+3+1+2+3+1 = 12.", item_id: "perimetre_polygone" },
+        { texte: "Notes : 12, 14, 10", question: "Quelle est la moyenne ?", options: ["10", "11", "12", "13"], correct: "12", explication: "(12+14+10)/3 = 12.", item_id: "moyenne_tableau" },
+        { texte: "Pour 3 croissants, on paie 2,10 €.", question: "Combien pour 5 croissants ?", options: ["3,00 €", "3,50 €", "4,00 €", "4,50 €"], correct: "3,50 €", explication: "2,10 ÷ 3 = 0,70 ; 0,70 × 5 = 3,50.", item_id: "proportionnalite" },
+        { texte: "1 L = 100 cL", question: "2,25 L = ... cL", options: ["22,5", "225", "2250", "22500"], correct: "225", explication: "2,25 × 100 = 225 cL.", item_id: "conversion" },
+        { texte: "Une droite graduée de 0 à 1 partagée en 5 parts. Flèche au 2e trait.", question: "Fraction ?", options: ["1/5", "2/5", "3/5", "4/5"], correct: "2/5", explication: "2e trait = 2/5.", item_id: "fraction_droite" },
+        { texte: "", question: "30 % de 60 € = ?", options: ["12 €", "15 €", "18 €", "20 €"], correct: "18 €", explication: "60 × 0,30 = 18.", item_id: "pourcentage_simple" },
+        { texte: "Un carré a un côté de 6 cm.", question: "Quel est son périmètre ?", options: ["12 cm", "18 cm", "24 cm", "36 cm"], correct: "24 cm", explication: "4 × 6 = 24 cm.", item_id: "perimetre_carre" },
+        { texte: "Un triangle a des angles de 60°, 60°, ?", question: "Quelle est la mesure du troisième angle ?", options: ["30°", "60°", "90°", "120°"], correct: "60°", explication: "Somme des angles = 180°, donc 180-120 = 60°.", item_id: "angles_triangle" }
+    ];
+
+    let currentExercice = null;
+    let currentQuestionValidated = false;
+    let selectedOptionValue = null;
+    let currentOptionsOrder = [];
+    let score = 0;
+    let totalAnswered = 0;
+    let elevePrenom = "";
+
+    const prenomSpan = document.getElementById('affiche-prenom');
+    const questionText = document.getElementById('question-text');
+    const miniTexteDiv = document.getElementById('mini-texte');
+    const optionsContainer = document.getElementById('options-container');
+    const feedbackDiv = document.getElementById('feedback-area');
+    const validateBtn = document.getElementById('validate-btn');
+    const dunnoBtn = document.getElementById('dunno-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const sessionCounter = document.getElementById('session-counter');
+    const scoreSpan = document.getElementById('score-session');
+    const progFill = document.getElementById('prog-fill');
+
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function getShuffledOptions(exo) {
+        let opts = exo.options.map(opt => ({ value: opt, isCorrect: (opt === exo.correct) }));
+        return shuffleArray([...opts]);
+    }
+
+    function pickRandomExercice() {
+        const randomIndex = Math.floor(Math.random() * EXERCICES.length);
+        return { ...EXERCICES[randomIndex] };
+    }
+
+    function loadNewExercice() {
+        currentQuestionValidated = false;
+        selectedOptionValue = null;
+        validateBtn.disabled = true;
+        dunnoBtn.disabled = false;
+        nextBtn.style.display = 'none';
+        feedbackDiv.className = 'feedback';
+        feedbackDiv.style.display = 'none';
+        feedbackDiv.innerHTML = '';
+
+        currentExercice = pickRandomExercice();
+        if (currentExercice.texte && currentExercice.texte.trim() !== "") {
+            miniTexteDiv.style.display = 'block';
+            miniTexteDiv.innerHTML = `📖 ${currentExercice.texte}`;
+        } else {
+            miniTexteDiv.style.display = 'none';
+        }
+        questionText.innerText = currentExercice.question;
+        currentOptionsOrder = getShuffledOptions(currentExercice);
+        optionsContainer.innerHTML = '';
+        currentOptionsOrder.forEach(opt => {
+            const btn = document.createElement('div');
+            btn.className = 'opt';
+            btn.innerText = opt.value;
+            btn.addEventListener('click', () => {
+                if (currentQuestionValidated) return;
+                document.querySelectorAll('.opt').forEach(el => el.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedOptionValue = opt.value;
+                validateBtn.disabled = false;
+            });
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function registerAnswer(isCorrect, selectedAnswer) {
+        totalAnswered++;
+        if (isCorrect) score++;
+        scoreSpan.textContent = `Score : ${score}`;
+        const progressPercent = (totalAnswered / 10) * 100;
+        progFill.style.width = progressPercent + "%";
+        sessionCounter.textContent = `Question ${totalAnswered} / 10`;
+
+        feedbackDiv.innerHTML = isCorrect
+            ? `✅ Bonne réponse !<br>${currentExercice.explication}`
+            : `❌ Mauvaise réponse. La bonne réponse était : "${currentExercice.correct}".<br>${currentExercice.explication}`;
+        feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+
+        // Envoi au Sheet
+        envoyerResultat(isCorrect);
+
+        currentQuestionValidated = true;
+        validateBtn.disabled = true;
+        dunnoBtn.disabled = true;
+        if (totalAnswered < 10) {
+            nextBtn.style.display = 'block';
+        } else {
+            nextBtn.textContent = "🏁 Terminer la session";
+            nextBtn.style.display = 'block';
+        }
+    }
+
+    async function envoyerResultat(isCorrect) {
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    matiere: 'Maths',
+                    prenom: elevePrenom,
+                    item_id: currentExercice.item_id,
+                    reponse: selectedOptionValue || "(aucune)",
+                    correct: isCorrect ? 1 : 0,
+                    score: isCorrect ? 1 : 0,
+                    explication: currentExercice.explication
+                })
+            });
+        } catch(e) { console.error(e); }
+    }
+
+    function validateAnswer() {
+        if (currentQuestionValidated) return;
+        if (!selectedOptionValue) return;
+        const isCorrect = (selectedOptionValue === currentExercice.correct);
+        registerAnswer(isCorrect, selectedOptionValue);
+    }
+
+    function dunno() {
+        if (currentQuestionValidated) return;
+        registerAnswer(false, null);
+    }
+
+    function nextStep() {
+        if (!currentQuestionValidated) return;
+        if (totalAnswered < 10) {
+            loadNewExercice();
+        } else {
+            alert(`Session terminée ! Score : ${score}/10. Les résultats ont été envoyés.`);
+            window.location.href = 'index.html';
+        }
+    }
+
+    // Initialisation
+    const prenom = localStorage.getItem('commando_prenom');
+    if (!prenom) {
+        alert("Tu dois d'abord choisir ton prénom sur la page d'accueil.");
+        window.location.href = 'index.html';
+    } else {
+        elevePrenom = prenom;
+        prenomSpan.textContent = elevePrenom;
+        loadNewExercice();
+    }
+
+    validateBtn.addEventListener('click', validateAnswer);
+    dunnoBtn.addEventListener('click', dunno);
+    nextBtn.addEventListener('click', nextStep);
+</script>
+</body>
+</html>
