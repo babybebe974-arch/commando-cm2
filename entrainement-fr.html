@@ -16,7 +16,6 @@
             color: #f0ede8;
             font-family: 'DM Sans', sans-serif;
             line-height: 1.5;
-            font-size: 18px;
             padding: 1rem;
             min-height: 100vh;
         }
@@ -39,7 +38,7 @@
         }
         .sub {
             color: #9aaec9;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             font-size: 0.9rem;
         }
         .question-card {
@@ -174,19 +173,27 @@
             color: #5ecfb1;
             font-size: 0.8rem;
         }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Entraînement <span class="gold">Français</span></h1>
-    <div class="sub">Exercices aléatoires · Double dose sur les notions difficiles</div>
+    <div class="sub">400 exercices · Niveau CM2 · Aléatoire</div>
     <div id="prenom-display" style="margin-bottom:1rem; font-weight:bold;">👤 Élève : <span id="affiche-prenom"></span></div>
-    <div class="progress">
-        <span id="session-counter">Question 1 / 10</span>
-        <span id="score-session">Score : 0</span>
-    </div>
-    <div class="progress-bar-bg"><div class="progress-fill" id="prog-fill"></div></div>
-    <div id="quiz-area">
+
+    <div id="loading" class="loading">Chargement des exercices...</div>
+
+    <div id="quiz-area" style="display:none;">
+        <div class="progress">
+            <span id="session-counter">Question 1 / 10</span>
+            <span id="score-session">Score : 0</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-fill" id="prog-fill"></div></div>
         <div class="question-card">
             <div id="mini-texte" class="mini-texte" style="display:none;"></div>
             <div class="q-text" id="question-text"></div>
@@ -204,26 +211,9 @@
 <div id="toast" class="toast"></div>
 
 <script>
-    // ========== URL DU SCRIPT GOOGLE SHEET ==========
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDgu0ErJHRYBC8Glo4GXB7UbizWmsvFgaRh8lHUzqTEf7znlrb35l_DNiXYd9lTakq/exec';
 
-    // ========== BANQUE D'EXERCICES FRANÇAIS (niveau CM2, variées) ==========
-    const EXERCICES = [
-        { texte: "Tom regarde son ami tomber. Son visage pâlit.", question: "Quel sentiment Tom ressent-il ?", options: ["de la peur", "de la tristesse", "de l'indifférence", "de la moquerie"], correct: "de la peur", explication: "La pâleur trahit la peur.", item_id: "inf_sentiment" },
-        { texte: "Lucie baisse la tête en voyant son zéro. Ses yeux s'embuent.", question: "Quel sentiment Lucie éprouve-t-elle ?", options: ["de la colère", "de la honte", "de la joie", "de la fierté"], correct: "de la honte", explication: "Baisser la tête et pleurer sont des signes de honte.", item_id: "inf_sentiment" },
-        { texte: "Dans le noir, Léa allume une lampe sous sa couverture et ouvre un livre.", question: "Que fait Léa ?", options: ["elle lit en cachette", "elle joue à un jeu", "elle dort", "elle écoute de la musique"], correct: "elle lit en cachette", explication: "Elle lit car elle ouvre un livre.", item_id: "info_explicite" },
-        { texte: "Les visites nocturnes du chat sont fréquentes.", question: "Que signifie « nocturnes » ?", options: ["qui arrivent le matin", "qui se passent la nuit", "qui sont silencieuses", "qui sont rapides"], correct: "qui se passent la nuit", explication: "Nocturne = relatif à la nuit.", item_id: "sens_nocturne" },
-        { texte: "Quand j'étais petit, je … au parc tous les jours.", question: "Conjuguez le verbe « aller » à l'imparfait.", options: ["vais", "allais", "irai", "suis allé"], correct: "allais", explication: "L'imparfait pour une habitude.", item_id: "imparfait" },
-        { texte: "", question: "« Il a le cœur sur la main. » Que signifie cette expression ?", options: ["il est généreux", "il est triste", "il est en colère", "il est fatigué"], correct: "il est généreux", explication: "Avoir le cœur sur la main = être généreux.", item_id: "expression_imagée" },
-        { texte: "Ce repas est délicieux.", question: "Quel mot pourrait remplacer « délicieux » ?", options: ["fade", "succulent", "amer", "salé"], correct: "succulent", explication: "Succulent = très bon.", item_id: "synonyme" },
-        { texte: "", question: "Parmi ces mots, un seul ne contient pas le préfixe « anti- ». Lequel ?", options: ["antiallergique", "antigel", "antilope", "antivol"], correct: "antilope", explication: "Antilope est un nom d’animal.", item_id: "prefixe_anti" },
-        { texte: "Cette vitre est incassable.", question: "Que signifie le suffixe « -able » ?", options: ["qu'on peut la casser", "qu'on ne peut pas la casser", "qu'on peut la voir", "qu'on peut la traverser"], correct: "qu'on ne peut pas la casser", explication: "Incassable = que l'on ne peut pas casser.", item_id: "suffixe_able" },
-        { texte: "La boîte de chocolats que tu as offerte … sur la table.", question: "Choisis la bonne forme du verbe.", options: ["est", "sont", "était", "étaient"], correct: "est", explication: "Le sujet est « la boîte » (singulier).", item_id: "accord_sujet_eloigne" },
-        { texte: "", question: "« Être à l’ouest » signifie...", options: ["être perdu", "être en colère", "être fatigué", "être heureux"], correct: "être perdu", explication: "Être à l’ouest = être désorienté.", item_id: "expression_imagée" },
-        { texte: "Cette voiture est rapide.", question: "Synonyme de « rapide » ?", options: ["lente", "véloce", "grande", "lourde"], correct: "véloce", explication: "Véloce = rapide.", item_id: "synonyme" },
-        { texte: "Le paquet de bonbons que tu as achetés … sur la table.", question: "Choisis la bonne forme.", options: ["est", "sont", "était", "étaient"], correct: "est", explication: "Le sujet est « le paquet ».", item_id: "accord_sujet_eloigne" }
-    ];
-
+    let exercices = [];       // tableau de tous les exercices (une fois chargé)
     let currentExercice = null;
     let currentQuestionValidated = false;
     let selectedOptionValue = null;
@@ -232,8 +222,9 @@
     let totalAnswered = 0;
     let elevePrenom = "";
 
-    // DOM
     const prenomSpan = document.getElementById('affiche-prenom');
+    const loadingDiv = document.getElementById('loading');
+    const quizDiv = document.getElementById('quiz-area');
     const questionText = document.getElementById('question-text');
     const miniTexteDiv = document.getElementById('mini-texte');
     const optionsContainer = document.getElementById('options-container');
@@ -259,8 +250,9 @@
     }
 
     function pickRandomExercice() {
-        const randomIndex = Math.floor(Math.random() * EXERCICES.length);
-        return { ...EXERCICES[randomIndex] };
+        if (exercices.length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * exercices.length);
+        return { ...exercices[randomIndex] };
     }
 
     function loadNewExercice() {
@@ -274,9 +266,11 @@
         feedbackDiv.innerHTML = '';
 
         currentExercice = pickRandomExercice();
-        if (currentExercice.texte && currentExercice.texte.trim() !== "") {
+        if (!currentExercice) return;
+
+        if (currentExercice.contexte && currentExercice.contexte.trim() !== "") {
             miniTexteDiv.style.display = 'block';
-            miniTexteDiv.innerHTML = `📖 ${currentExercice.texte}`;
+            miniTexteDiv.innerHTML = `📖 ${currentExercice.contexte}`;
         } else {
             miniTexteDiv.style.display = 'none';
         }
@@ -334,7 +328,7 @@
                 body: JSON.stringify({
                     matiere: 'Français',
                     prenom: elevePrenom,
-                    item_id: currentExercice.item_id,
+                    item_id: currentExercice.item_id || "inconnu",
                     reponse: selectedOptionValue || "(aucune)",
                     correct: isCorrect ? 1 : 0,
                     score: isCorrect ? 1 : 0,
@@ -361,9 +355,40 @@
         if (totalAnswered < 10) {
             loadNewExercice();
         } else {
-            // Fin de session
             alert(`Session terminée ! Score : ${score}/10. Les résultats ont été envoyés.`);
             window.location.href = 'index.html';
+        }
+    }
+
+    // Chargement du fichier JSON
+    async function chargerExercices() {
+        try {
+            const response = await fetch('exos_fr.json');
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            // Aplatir : chaque item a une liste de variantes
+            exercices = [];
+            for (let item of data) {
+                if (item.variantes && Array.isArray(item.variantes)) {
+                    for (let variante of item.variantes) {
+                        exercices.push({
+                            contexte: variante.contexte || "",
+                            question: variante.question,
+                            options: variante.options,
+                            correct: variante.correct,
+                            explication: variante.explication,
+                            item_id: item.id
+                        });
+                    }
+                }
+            }
+            if (exercices.length === 0) throw new Error("Aucun exercice trouvé dans le fichier JSON");
+            loadingDiv.style.display = 'none';
+            quizDiv.style.display = 'block';
+            loadNewExercice();
+        } catch(err) {
+            console.error(err);
+            loadingDiv.innerHTML = '⚠️ Erreur de chargement des exercices. Vérifie que le fichier exos_fr.json est bien présent à la racine.';
         }
     }
 
@@ -375,7 +400,7 @@
     } else {
         elevePrenom = prenom;
         prenomSpan.textContent = elevePrenom;
-        loadNewExercice();
+        chargerExercices();
     }
 
     validateBtn.addEventListener('click', validateAnswer);
