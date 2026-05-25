@@ -1,0 +1,536 @@
+[
+  {
+    "id": "proportionnalite",
+    "competence": "proportionnalite",
+    "taux": 0.5,
+    "variantes": [
+      {
+        "contexte": "Pour 2 personnes, il faut 3 œufs.",
+        "question": "Combien d'œufs pour 10 personnes ?",
+        "options": [
+          "15",
+          "16",
+          "14",
+          "3"
+        ],
+        "correct": "15",
+        "explication": "10 ÷ 2 = 5, donc 3 × 5 = 15 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 2 personnes, il faut 4 œufs.",
+        "question": "Combien d'œufs pour 10 personnes ?",
+        "options": [
+          "20",
+          "21",
+          "19",
+          "4"
+        ],
+        "correct": "20",
+        "explication": "10 ÷ 2 = 5, donc 4 × 5 = 20 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 4 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 20 personnes ?",
+        "options": [
+          "25",
+          "26",
+          "24",
+          "5"
+        ],
+        "correct": "25",
+        "explication": "20 ÷ 4 = 5, donc 5 × 5 = 25 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 3 personnes, il faut 4 œufs.",
+        "question": "Combien d'œufs pour 15 personnes ?",
+        "options": [
+          "20",
+          "21",
+          "19",
+          "4"
+        ],
+        "correct": "20",
+        "explication": "15 ÷ 3 = 5, donc 4 × 5 = 20 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 5 personnes, il faut 2 œufs.",
+        "question": "Combien d'œufs pour 20 personnes ?",
+        "options": [
+          "8",
+          "9",
+          "7",
+          "2"
+        ],
+        "correct": "8",
+        "explication": "20 ÷ 5 = 4, donc 2 × 4 = 8 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 5 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 10 personnes ?",
+        "options": [
+          "10",
+          "11",
+          "9",
+          "5"
+        ],
+        "correct": "10",
+        "explication": "10 ÷ 5 = 2, donc 5 × 2 = 10 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 5 personnes, il faut 2 œufs.",
+        "question": "Combien d'œufs pour 15 personnes ?",
+        "options": [
+          "6",
+          "7",
+          "5",
+          "2"
+        ],
+        "correct": "6",
+        "explication": "15 ÷ 5 = 3, donc 2 × 3 = 6 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 3 personnes, il faut 3 œufs.",
+        "question": "Combien d'œufs pour 9 personnes ?",
+        "options": [
+          "9",
+          "10",
+          "8",
+          "3"
+        ],
+        "correct": "9",
+        "explication": "9 ÷ 3 = 3, donc 3 × 3 = 9 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 5 personnes, il faut 4 œufs.",
+        "question": "Combien d'œufs pour 10 personnes ?",
+        "options": [
+          "8",
+          "9",
+          "7",
+          "4"
+        ],
+        "correct": "8",
+        "explication": "10 ÷ 5 = 2, donc 4 × 2 = 8 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 3 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 12 personnes ?",
+        "options": [
+          "20",
+          "21",
+          "19",
+          "5"
+        ],
+        "correct": "20",
+        "explication": "12 ÷ 3 = 4, donc 5 × 4 = 20 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 4 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 20 personnes ?",
+        "options": [
+          "25",
+          "26",
+          "24",
+          "5"
+        ],
+        "correct": "25",
+        "explication": "20 ÷ 4 = 5, donc 5 × 5 = 25 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 4 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 16 personnes ?",
+        "options": [
+          "20",
+          "21",
+          "19",
+          "5"
+        ],
+        "correct": "20",
+        "explication": "16 ÷ 4 = 4, donc 5 × 4 = 20 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 4 personnes, il faut 3 œufs.",
+        "question": "Combien d'œufs pour 20 personnes ?",
+        "options": [
+          "15",
+          "16",
+          "14",
+          "3"
+        ],
+        "correct": "15",
+        "explication": "20 ÷ 4 = 5, donc 3 × 5 = 15 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 2 personnes, il faut 4 œufs.",
+        "question": "Combien d'œufs pour 8 personnes ?",
+        "options": [
+          "16",
+          "17",
+          "15",
+          "4"
+        ],
+        "correct": "16",
+        "explication": "8 ÷ 2 = 4, donc 4 × 4 = 16 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 3 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 6 personnes ?",
+        "options": [
+          "10",
+          "11",
+          "9",
+          "5"
+        ],
+        "correct": "10",
+        "explication": "6 ÷ 3 = 2, donc 5 × 2 = 10 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 2 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 10 personnes ?",
+        "options": [
+          "25",
+          "26",
+          "24",
+          "5"
+        ],
+        "correct": "25",
+        "explication": "10 ÷ 2 = 5, donc 5 × 5 = 25 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 4 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 20 personnes ?",
+        "options": [
+          "25",
+          "26",
+          "24",
+          "5"
+        ],
+        "correct": "25",
+        "explication": "20 ÷ 4 = 5, donc 5 × 5 = 25 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 3 personnes, il faut 4 œufs.",
+        "question": "Combien d'œufs pour 15 personnes ?",
+        "options": [
+          "20",
+          "21",
+          "19",
+          "4"
+        ],
+        "correct": "20",
+        "explication": "15 ÷ 3 = 5, donc 4 × 5 = 20 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 5 personnes, il faut 5 œufs.",
+        "question": "Combien d'œufs pour 25 personnes ?",
+        "options": [
+          "25",
+          "26",
+          "24",
+          "5"
+        ],
+        "correct": "25",
+        "explication": "25 ÷ 5 = 5, donc 5 × 5 = 25 œufs.",
+        "item_id": "proportionnalite"
+      },
+      {
+        "contexte": "Pour 4 personnes, il faut 3 œufs.",
+        "question": "Combien d'œufs pour 8 personnes ?",
+        "options": [
+          "6",
+          "7",
+          "5",
+          "3"
+        ],
+        "correct": "6",
+        "explication": "8 ÷ 4 = 2, donc 3 × 2 = 6 œufs.",
+        "item_id": "proportionnalite"
+      }
+    ]
+  },
+  {
+    "id": "conversion",
+    "competence": "conversion",
+    "taux": 0.5,
+    "variantes": [
+      {
+        "contexte": "8 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "800",
+          "80",
+          "8000",
+          "8"
+        ],
+        "correct": "800",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "4 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "400",
+          "40",
+          "4000",
+          "4"
+        ],
+        "correct": "400",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "9 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "900",
+          "90",
+          "9000",
+          "9"
+        ],
+        "correct": "900",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "8 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "800",
+          "80",
+          "8000",
+          "8"
+        ],
+        "correct": "800",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "10 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "1000",
+          "100",
+          "10000",
+          "10"
+        ],
+        "correct": "1000",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "7 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "700",
+          "70",
+          "7000",
+          "7"
+        ],
+        "correct": "700",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "7 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "700",
+          "70",
+          "7000",
+          "7"
+        ],
+        "correct": "700",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "6 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "600",
+          "60",
+          "6000",
+          "6"
+        ],
+        "correct": "600",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "8 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "800",
+          "80",
+          "8000",
+          "8"
+        ],
+        "correct": "800",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "5 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "500",
+          "50",
+          "5000",
+          "5"
+        ],
+        "correct": "500",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "6 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "600",
+          "60",
+          "6000",
+          "6"
+        ],
+        "correct": "600",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "6 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "600",
+          "60",
+          "6000",
+          "6"
+        ],
+        "correct": "600",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "5 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "500",
+          "50",
+          "5000",
+          "5"
+        ],
+        "correct": "500",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "8 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "800",
+          "80",
+          "8000",
+          "8"
+        ],
+        "correct": "800",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "6 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "600",
+          "60",
+          "6000",
+          "6"
+        ],
+        "correct": "600",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "5 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "500",
+          "50",
+          "5000",
+          "5"
+        ],
+        "correct": "500",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "8 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "800",
+          "80",
+          "8000",
+          "8"
+        ],
+        "correct": "800",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "10 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "1000",
+          "100",
+          "10000",
+          "10"
+        ],
+        "correct": "1000",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "8 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "800",
+          "80",
+          "8000",
+          "8"
+        ],
+        "correct": "800",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      },
+      {
+        "contexte": "1 m = ... cm",
+        "question": "Complète l'égalité.",
+        "options": [
+          "100",
+          "10",
+          "1000",
+          "1"
+        ],
+        "correct": "100",
+        "explication": "1 m = 100 cm, donc on multiplie par 100.",
+        "item_id": "conversion"
+      }
+    ]
+  }
+]
